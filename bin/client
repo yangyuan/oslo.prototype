@@ -1,0 +1,10 @@
+#!/usr/bin/python
+
+from prototypeclient import client as prototype_client
+from keystoneclient.v2_0 import client as keystone_client
+
+if __name__ == '__main__':
+	client = keystone_client.Client(auth_url="http://127.0.0.1:35357/v2.0", username="admin", password="admin", tenant_name="admin")
+	token = client.auth_ref['token']['id']
+	client = prototype_client.Client(endpoint='http://127.0.0.1:8787/v1/', token=token)
+	print client.sample.debug()

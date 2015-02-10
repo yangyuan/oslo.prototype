@@ -1,0 +1,51 @@
+reprare keystone, database and ampd server
+==========================================
+
+### database (if you don't have one)
+apt-get install mysql-server
+
+### ampd server (if you don't have one)
+apt-get install rabbitmq-server
+rabbitmqctl change_password guest {PASSWORD}
+
+### keystone (if you don't have one)
+git clone keystone
+python setup.py install
+
+change keystone.conf
+admin_token = {ADMINTOKEN}
+connection = mysql://{USERNAME}:{PASSWORD}@localhost/keystone
+keystone-manage db_sync
+
+keystone --os-token {ADMINTOKEN} --os-endpoint http://localhost:35357/v2.0 tenant-create --name admin --description "admin"
+keystone --os-token {ADMINTOKEN} --os-endpoint http://localhost:35357/v2.0 user-create --name admin --pass {PASSWORD} --email admin@openstack.org
+keystone --os-token {ADMINTOKEN} --os-endpoint http://localhost:35357/v2.0 role-create --name admin
+keystone --os-token {ADMINTOKEN} --os-endpoint http://localhost:35357/v2.0 user-role-add --user admin --tenant admin --role admin
+
+install prototype (or your project)
+===================================
+
+## reprare python
+setup.py is not a good idea if you want to test or develop.
+pip install -r requirements.txt
+add temporary python path for python2.7:
+echo "/{PATH}/prototype" > /usr/lib/python2.7/dist-packages/prototype.pth
+echo "/{PATH}/python-prototypeclient" > /usr/lib/python2.7/dist-packages/prototypeclient.pth
+
+## config
+config prototype.conf, you can use etc/prototype/prototype.conf.
+
+## reprare database
+CREATE DATABASE prototype;
+./bin/manage --config-file etc/prototype/prototype.conf db sync
+
+## run service
+./bin/api --config-file etc/prototype/prototype.conf
+./bin/worker --config-file etc/prototype/prototype.conf
+or you can edit and run run.sh
+
+## test
+test pythonclient
+./bin/client
+test commond line
+./bin/cli --os-username admin --os-password admin --os-tenant-name admin --os-auth-url http://localhost:35357/v2.0 --os-prototype-url http://127.0.0.1:8787/v1 sample-debug --param=sampleparam

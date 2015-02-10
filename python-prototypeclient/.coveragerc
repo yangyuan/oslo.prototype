@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = prototypeclient
+omit = prototypeclient/openstack/*
+
+[report]
+ignore-errors = True

@@ -1,0 +1,6 @@
+#!/usr/bin/python
+
+from prototype.cmd import api
+
+if __name__ == '__main__':
+    api.main()
