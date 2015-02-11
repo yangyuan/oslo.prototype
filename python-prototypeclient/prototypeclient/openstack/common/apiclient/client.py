@@ -34,8 +34,8 @@ try:
 except ImportError:
     import json
 
-from oslo_utils import encodeutils
-from oslo_utils import importutils
+from oslo.utils import encodeutils
+from oslo.utils import importutils
 import requests
 
 from prototypeclient.openstack.common._i18n import _
