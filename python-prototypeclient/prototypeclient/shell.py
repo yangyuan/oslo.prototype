@@ -18,7 +18,6 @@ import six.moves.urllib.parse as urlparse
 
 import prototypeclient
 from prototypeclient.openstack.common.apiclient import exceptions as exc
-from prototypeclient.openstack.common.gettextutils import _
 
 from keystoneclient.auth.identity import v2 as v2_auth
 from keystoneclient.auth.identity import v3 as v3_auth
@@ -253,7 +252,7 @@ class OpenStackPrototypeShell(object):
 
             if not args.os_username:
                 raise exc.CommandError(
-                    _("You must provide a username via"
+                    ("You must provide a username via"
                       " either --os-username or "
                       "env[OS_USERNAME]"))
 
@@ -269,7 +268,7 @@ class OpenStackPrototypeShell(object):
                 # user Ctl-D when prompted.
                 if not args.os_password:
                     raise exc.CommandError(
-                        _("You must provide a password via "
+                        ("You must provide a password via "
                           "either --os-password, "
                           "env[OS_PASSWORD], "
                           "or prompted response"))
@@ -286,7 +285,7 @@ class OpenStackPrototypeShell(object):
                 # tenant is deprecated in Keystone v3. Use the latest
                 # terminology instead.
                 raise exc.CommandError(
-                    _("You must provide a project_id or project_name ("
+                    ("You must provide a project_id or project_name ("
                       "with project_domain_name or project_domain_id) "
                       "via "
                       "  --os-project-id (env[OS_PROJECT_ID])"
@@ -298,7 +297,7 @@ class OpenStackPrototypeShell(object):
 
             if not args.os_auth_url:
                 raise exc.CommandError(
-                    _("You must provide an auth url via"
+                    ("You must provide an auth url via"
                       " either --os-auth-url or "
                       "via env[OS_AUTH_URL]"))
 
