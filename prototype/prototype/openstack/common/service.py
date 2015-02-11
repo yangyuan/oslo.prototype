@@ -18,7 +18,7 @@
 """Generic Node base class for all workers that run on hosts."""
 
 import errno
-import logging as std_logging
+import logging
 import os
 import random
 import signal
@@ -35,11 +35,10 @@ except ImportError:
 
 import eventlet
 from eventlet import event
-from oslo_config import cfg
+from oslo.config import cfg
 
 from prototype.openstack.common import eventlet_backdoor
-from oslo_log._i18n import _LE, _LI, _LW
-from oslo_log import log as logging
+from prototype.openstack.common._i18n import _LE, _LI, _LW
 from prototype.openstack.common import systemd
 from prototype.openstack.common import threadgroup
 
@@ -163,7 +162,7 @@ class ServiceLauncher(Launcher):
         signo = 0
 
         LOG.debug('Full set of CONF:')
-        CONF.log_opt_values(LOG, std_logging.DEBUG)
+        CONF.log_opt_values(LOG, logging.DEBUG)
 
         try:
             if ready_callback:
@@ -377,7 +376,7 @@ class ProcessLauncher(object):
 
         systemd.notify_once()
         LOG.debug('Full set of CONF:')
-        CONF.log_opt_values(LOG, std_logging.DEBUG)
+        CONF.log_opt_values(LOG, logging.DEBUG)
 
         try:
             while True:

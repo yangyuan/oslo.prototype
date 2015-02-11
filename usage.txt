@@ -45,6 +45,7 @@ CREATE DATABASE prototype;
 or you can edit and run run.sh
 
 ## test
+default {PASSWORD} is admin
 test pythonclient
 ./bin/client
 test commond line
